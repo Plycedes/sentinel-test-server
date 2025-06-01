@@ -2,39 +2,6 @@ import cv2
 import math
 import os
 
-def crop_bottom_right(image_path, scale=45, crop_ratio=8):
-    image = cv2.imread(image_path)
-    if image is None:
-        print(f"Error: Could not read image at {image_path}")
-        return
-
-    height, width = image.shape[:2]
-    print("Original dimensions:", height, width)
-    
-    sc_height = height / scale
-    sc_width = width / scale
-
-    cr_height = math.floor(sc_height * crop_ratio)
-    cr_width = math.floor(sc_width * crop_ratio)
-    print("Crop size:", cr_height, cr_width)
-
-    x_start = width - cr_width
-    y_start = height - cr_height
-
-    cropped = image[y_start:height, x_start:width]
-
-    base_name = os.path.basename(image_path)
-    name, ext = os.path.splitext(base_name)
-    new_filename = f'{name}_crp{ext}'
-
-    cv2.imwrite(save_path, cropped)
-    print(f"Cropped image saved to: {save_path}")
-
-    cv2.imshow('Cropped', cropped)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
 def crop_bottom_middle(image_path, scale=41, crop_ratio=7):
     image = cv2.imread(image_path)
     if image is None:

@@ -331,11 +331,7 @@ def calculate_similarity(image1, image2, phash, image_path1, image_path2, output
             raise ValueError("Cannot resize an empty or invalid image")
         img = (img * 255).astype(np.uint8)
         return cv2.resize(img, size, interpolation=cv2.INTER_NEAREST)
-    
-    def binarization(image, threshold=127): 
-        image = cv2.resize(image, (120, 120), interpolation=cv2.INTER_NEAREST)     
-        # _, binary = cv2.threshold(image, threshold, 255, cv2.THRESH_BINARY)       
-        return image
+
 
     def resize_image_for_ber(img, size=(40, 40)):
         if img is None or img.size == 0:
@@ -361,46 +357,25 @@ def calculate_similarity(image1, image2, phash, image_path1, image_path2, output
         )
         # inverted_binary = cv2.bitwise_not(binary)
         
-        return binary    
+        return binary       
     
-    # print("Image1 Image2: ", image1.shape, image2.shape)
-    # image1_resized = image1
     image2_resized = image2
 
     image1_resized = adaptive_gaussian_luminosity(image1)
-    # image2_resized = resize_noise_image(image2)
-
-    # image1_resized = resize_noise_image(image1)
-    # image2_resized = resize_noise_image(image2)
-
-    # image1_resized = binarization(image1)
-    # image2_resized = binarization(image2)
+    
    
 
     image1_name = os.path.splitext(os.path.basename(image_path1))[0]
     image2_name = os.path.splitext(os.path.basename(image_path2))[0]
-
-    # cv2.imwrite(os.path.join(output_folder, f"{image1_name}_resized.jpg"), image1_resized)
-    # cv2.imwrite(os.path.join(output_folder, f"{image2_name}_resized.jpg"), image2_resized)
-
-    # print("Resized: ", image1_resized.shape, image2_resized.shape)
-
-    #print(np.allclose(image1_resized, image2_resized))
-
-    # processed_image = adaptive_gaussian_luminosity(image1)
-    unprocessed_image = cv2.resize(image1, (160, 160), interpolation=cv2.INTER_NEAREST)
-    # reference_pattern = resize_noise_image(image2)
+    
+    unprocessed_image = cv2.resize(image1, (160, 160), interpolation=cv2.INTER_NEAREST)    
 
     aligned_noise_image, ecc_score = align_using_ecc(image2_resized, image1_resized)
-
-    # cv2.imwrite(os.path.join(output_folder, f"{image1_name}_ecc_aligned.jpg"), aligned_noise_image)
+    
 
     hash1 = phash.compute_hash(aligned_noise_image)
     hash2 = phash.compute_hash(image2_resized)
-    phash_similarity = phash.similarity(hash1, hash2)
-
-    # print("Hash1:\n" ,hash1)
-    # print("Hash2:\n" ,hash2)
+    phash_similarity = phash.similarity(hash1, hash2)    
     
     # flann_matches = flann_matcher(image1_resized, image2_resized)
     # correlation = calculate_image_correlation(image1_resized, image2_resized)
@@ -414,11 +389,7 @@ def calculate_similarity(image1, image2, phash, image_path1, image_path2, output
     if aligned_noise_image.shape != image2_resized.shape:
         image2_resized = cv2.resize(image2_resized, (aligned_noise_image.shape[1], aligned_noise_image.shape[0]))
 
-    # aligned_noise_image = adaptive_gaussian_luminosity(aligned_noise_image)
-    # cv2.imwrite(os.path.join(output_folder, f"{image1_name}_aligned_resized.jpg"), aligned_noise_image)
-
-
-    # image2_resized = cv2.cvtColor(image2_resized, cv2.COLOR_BGR2GRAY)
+   
 
     correlation = calculate_image_correlation(aligned_noise_image, image2_resized)
     ssim_similarity = calculate_ssim_similarity(aligned_noise_image, image2_resized)

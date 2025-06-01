@@ -47,15 +47,11 @@ async def receive_image(
         filename = f"{uuid4().hex}_{input_image.filename}"
         image_path = os.path.join("qrs", filename)
         with open(image_path, "wb") as buffer:
-            shutil.copyfileobj(input_image.file, buffer)
-        print("Hello0")
-        # Optionally, read other fields
-        #qr_text = await text_input.read()  # if you want to process it as bytes/text
+            shutil.copyfileobj(input_image.file, buffer)        
+        
         loc_data = json.loads(location) if location else None
-        blur_history = json.loads(blur_values_history) if blur_values_history else None
-        print("Hello1")
-        # Process image here later
-        # results = your_processing_function(image_path, qr_text, ...)
+        blur_history = json.loads(blur_values_history) if blur_values_history else None        
+        
         cropped_path = crop_bottom_middle(image_path)
         print(cropped_path)
         ssim = process_image_noise(cropped_path, "qrs/RP30.png", "qrs") 

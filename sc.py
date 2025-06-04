@@ -609,10 +609,4 @@ def process_image_noise(image_path1, image_path2, output_folder):
     os.unlink(image_path1)
     return ssim_similarity
 
-process_image_noise("consistency/P1/CP17/CP4_crp.png", "ref15/rps/RP30.png", "consistency/P1/CP17/resized" )
-process_image_noise("consistency/P1/CP18/CP4_crp.png", "ref15/rps/RP30.png", "consistency/P1/CP18/resized" )
-process_image_noise("consistency/P1/CP19/CP4_crp.png", "ref15/rps/RP30.png", "consistency/P1/CP19/resized" )
-process_image_noise("consistency/P1/CP20/CP4_crp.png", "ref15/rps/RP30.png", "consistency/P1/CP20/resized" )
-process_image_noise("consistency/P1/CP21/CP4_crp.png", "ref15/rps/RP30.png", "consistency/P1/CP21/resized" )
-
 

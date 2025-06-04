@@ -33,10 +33,4 @@ def crop_bottom_middle(image_path, scale=41, crop_ratio=7):
     print(f"Cropped image saved to: {save_path}")
     return save_path
 
-    # cv2.imshow('Cropped', cropped)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-
-
-crop_bottom_middle('qrs/CP1.png')
 
